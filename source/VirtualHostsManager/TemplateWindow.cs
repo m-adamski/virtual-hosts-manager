@@ -37,20 +37,6 @@ namespace VirtualHostsManager
             this.templateEditor.Styles[Style.Cpp.Word].ForeColor = Color.Purple;
             this.templateEditor.Styles[Style.Cpp.Word2].ForeColor = Color.FromArgb(128, 128, 128);
             this.templateEditor.Styles[Style.Cpp.String].ForeColor = Color.FromArgb(163, 21, 21);
-
-            //this.templateEditor.Styles[Style.Cpp.Default].ForeColor = Color.Silver;
-            //this.templateEditor.Styles[Style.Cpp.Comment].ForeColor = Color.FromArgb(0, 128, 0); // Green
-            //this.templateEditor.Styles[Style.Cpp.CommentLine].ForeColor = Color.FromArgb(0, 128, 0); // Green
-            //this.templateEditor.Styles[Style.Cpp.CommentLineDoc].ForeColor = Color.FromArgb(128, 128, 128); // Gray
-            //this.templateEditor.Styles[Style.Cpp.Number].ForeColor = Color.Olive;
-            //this.templateEditor.Styles[Style.Cpp.Word].ForeColor = Color.Blue;
-            //this.templateEditor.Styles[Style.Cpp.Word2].ForeColor = Color.Blue;
-            //this.templateEditor.Styles[Style.Cpp.String].ForeColor = Color.FromArgb(163, 21, 21); // Red
-            //this.templateEditor.Styles[Style.Cpp.Character].ForeColor = Color.FromArgb(163, 21, 21); // Red
-            //this.templateEditor.Styles[Style.Cpp.Verbatim].ForeColor = Color.FromArgb(163, 21, 21); // Red
-            //this.templateEditor.Styles[Style.Cpp.StringEol].BackColor = Color.Pink;
-            //this.templateEditor.Styles[Style.Cpp.Operator].ForeColor = Color.Purple;
-            //this.templateEditor.Styles[Style.Cpp.Preprocessor].ForeColor = Color.Maroon;
             this.templateEditor.Lexer = Lexer.Cpp;
 
             this.templateEditor.SetKeywords(0, "@Name @DocumentRootPath @CertificatePath @CertificateKeyPath");

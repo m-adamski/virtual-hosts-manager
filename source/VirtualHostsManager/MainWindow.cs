@@ -25,9 +25,10 @@ namespace VirtualHostsManager
             string subdomainRootDirectory = Config.Default.SubdomainRootDirectory;
             string hostConfigDirectory = Config.Default.HostConfigDirectory;
             string certificateDirectory = Config.Default.CertificateDirectory;
+            string openSSLPath = Config.Default.OpenSSLPath;
 
             // Check if directories exist
-            if (!Directory.Exists(subdomainRootDirectory) || !Directory.Exists(hostConfigDirectory) || !Directory.Exists(certificateDirectory))
+            if (!Directory.Exists(subdomainRootDirectory) || !Directory.Exists(hostConfigDirectory) || !Directory.Exists(certificateDirectory) || !File.Exists(openSSLPath))
             {
                 this.configInfoPictureBox.Visible = true;
                 this.createButton.Enabled = false;

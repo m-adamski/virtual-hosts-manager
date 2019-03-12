@@ -96,5 +96,89 @@ namespace VirtualHostsManager {
                 this["HostConfigTemplate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CertificateCountryName {
+            get {
+                return ((string)(this["CertificateCountryName"]));
+            }
+            set {
+                this["CertificateCountryName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CertificateStateName {
+            get {
+                return ((string)(this["CertificateStateName"]));
+            }
+            set {
+                this["CertificateStateName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CertificateLocalityName {
+            get {
+                return ((string)(this["CertificateLocalityName"]));
+            }
+            set {
+                this["CertificateLocalityName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CertificateOrganizationName {
+            get {
+                return ((string)(this["CertificateOrganizationName"]));
+            }
+            set {
+                this["CertificateOrganizationName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CertificateUnitName {
+            get {
+                return ((string)(this["CertificateUnitName"]));
+            }
+            set {
+                this["CertificateUnitName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CertificateEmailAddress {
+            get {
+                return ((string)(this["CertificateEmailAddress"]));
+            }
+            set {
+                this["CertificateEmailAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OpenSSLPath {
+            get {
+                return ((string)(this["OpenSSLPath"]));
+            }
+            set {
+                this["OpenSSLPath"] = value;
+            }
+        }
     }
 }

@@ -34,7 +34,11 @@
             this.valueColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.saveButton = new System.Windows.Forms.Button();
             this.infoLabel = new System.Windows.Forms.Label();
+            this.certificateListView = new BrightIdeasSoftware.ObjectListView();
+            this.certNameColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.certValueColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             ((System.ComponentModel.ISupportInitialize)(this.configListView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.certificateListView)).BeginInit();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -51,6 +55,7 @@
             // 
             this.configListView.AllColumns.Add(this.nameColumn);
             this.configListView.AllColumns.Add(this.valueColumn);
+            this.configListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.configListView.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
             this.configListView.CellEditUseWholeCell = false;
             this.configListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -63,7 +68,7 @@
             this.configListView.MultiSelect = false;
             this.configListView.Name = "configListView";
             this.configListView.ShowGroups = false;
-            this.configListView.Size = new System.Drawing.Size(660, 308);
+            this.configListView.Size = new System.Drawing.Size(660, 150);
             this.configListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.configListView.TabIndex = 2;
             this.configListView.UseCompatibleStateImageBehavior = false;
@@ -101,12 +106,47 @@
             this.infoLabel.TabIndex = 4;
             this.infoLabel.Text = "Double click on the selected item to change the value";
             // 
+            // certificateListView
+            // 
+            this.certificateListView.AllColumns.Add(this.certNameColumn);
+            this.certificateListView.AllColumns.Add(this.certValueColumn);
+            this.certificateListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.certificateListView.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
+            this.certificateListView.CellEditUseWholeCell = false;
+            this.certificateListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.certNameColumn,
+            this.certValueColumn});
+            this.certificateListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.certificateListView.FullRowSelect = true;
+            this.certificateListView.Location = new System.Drawing.Point(12, 170);
+            this.certificateListView.MultiSelect = false;
+            this.certificateListView.Name = "certificateListView";
+            this.certificateListView.ShowGroups = false;
+            this.certificateListView.Size = new System.Drawing.Size(660, 150);
+            this.certificateListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.certificateListView.TabIndex = 5;
+            this.certificateListView.UseCompatibleStateImageBehavior = false;
+            this.certificateListView.View = System.Windows.Forms.View.Details;
+            // 
+            // certNameColumn
+            // 
+            this.certNameColumn.AspectName = "Description";
+            this.certNameColumn.Text = "Name";
+            this.certNameColumn.Width = 200;
+            // 
+            // certValueColumn
+            // 
+            this.certValueColumn.AspectName = "Value";
+            this.certValueColumn.Text = "Value";
+            this.certValueColumn.Width = 450;
+            // 
             // ConfigWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(684, 361);
+            this.Controls.Add(this.certificateListView);
             this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.configListView);
@@ -117,6 +157,7 @@
             this.Name = "ConfigWindow";
             this.Text = "Config";
             ((System.ComponentModel.ISupportInitialize)(this.configListView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.certificateListView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,5 +170,8 @@
         private BrightIdeasSoftware.OLVColumn valueColumn;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Label infoLabel;
+        private BrightIdeasSoftware.ObjectListView certificateListView;
+        private BrightIdeasSoftware.OLVColumn certNameColumn;
+        private BrightIdeasSoftware.OLVColumn certValueColumn;
     }
 }

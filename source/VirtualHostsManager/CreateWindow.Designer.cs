@@ -31,9 +31,10 @@
             this.hostListView = new BrightIdeasSoftware.ObjectListView();
             this.domainNameColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.directoryColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-            this.button1 = new System.Windows.Forms.Button();
+            this.createButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.contentEditor = new ScintillaNET.Scintilla();
+            this.resetButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.hostListView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -70,14 +71,16 @@
             this.directoryColumn.Text = "Directory";
             this.directoryColumn.Width = 420;
             // 
-            // button1
+            // createButton
             // 
-            this.button1.Location = new System.Drawing.Point(597, 526);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.createButton.Enabled = false;
+            this.createButton.Location = new System.Drawing.Point(597, 526);
+            this.createButton.Name = "createButton";
+            this.createButton.Size = new System.Drawing.Size(75, 23);
+            this.createButton.TabIndex = 1;
+            this.createButton.Text = "Create";
+            this.createButton.UseVisualStyleBackColor = true;
+            this.createButton.Click += new System.EventHandler(this.createButton_Click);
             // 
             // cancelButton
             // 
@@ -98,6 +101,17 @@
             this.contentEditor.Size = new System.Drawing.Size(660, 367);
             this.contentEditor.TabIndex = 3;
             this.contentEditor.Text = "Select the domain to create the virtual host configuration";
+            this.contentEditor.TextChanged += new System.EventHandler(this.contentEditor_TextChanged);
+            // 
+            // resetButton
+            // 
+            this.resetButton.Location = new System.Drawing.Point(12, 526);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(75, 23);
+            this.resetButton.TabIndex = 4;
+            this.resetButton.Text = "Reset";
+            this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // CreateWindow
             // 
@@ -105,9 +119,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
             this.ClientSize = new System.Drawing.Size(684, 561);
+            this.Controls.Add(this.resetButton);
             this.Controls.Add(this.contentEditor);
             this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.createButton);
             this.Controls.Add(this.hostListView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -124,8 +139,9 @@
         private BrightIdeasSoftware.ObjectListView hostListView;
         private BrightIdeasSoftware.OLVColumn domainNameColumn;
         private BrightIdeasSoftware.OLVColumn directoryColumn;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button createButton;
         private System.Windows.Forms.Button cancelButton;
         private ScintillaNET.Scintilla contentEditor;
+        private System.Windows.Forms.Button resetButton;
     }
 }
