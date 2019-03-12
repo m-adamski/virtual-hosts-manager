@@ -1,0 +1,44 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="VirtualHostsManager" GeneratedClassName="Config">
+  <Profiles />
+  <Settings>
+    <Setting Name="SubdomainRootDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="HostConfigDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CertificateDirectory" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="HostConfigTemplate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;VirtualHost *:80&gt;
+    ServerName @Name
+    ServerAlias www.@Name
+    DocumentRoot @DocumentRootPath
+
+    &lt;Directory "@DocumentRootPath"&gt;
+        Options +Indexes +Includes +FollowSymLinks +MultiViews
+        AllowOverride All
+        Require local
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:443&gt;
+    ServerName @Name
+    ServerAlias www.@Name
+    DocumentRoot @DocumentRootPath
+
+    SSLEngine On
+    SSLCertificateFile @CertificatePath
+    SSLCertificateKeyFile @CertificateKeyPath
+
+    &lt;Directory "@DocumentRootPath"&gt;
+        Options +Indexes +Includes +FollowSymLinks +MultiViews
+        AllowOverride All
+        Require local
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
