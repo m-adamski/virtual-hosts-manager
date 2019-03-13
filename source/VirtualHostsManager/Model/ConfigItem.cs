@@ -1,6 +1,6 @@
 ﻿namespace VirtualHostsManager.Model
 {
-    class ConfigItem
+    public class ConfigItem
     {
         public string Name { get; set; }
         public string Description { get; set; }

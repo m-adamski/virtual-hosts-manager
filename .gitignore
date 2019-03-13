@@ -1,4 +1,5 @@
 /source/.vs/
 /source/VirtualHostsManager/bin/Debug/
-/source/VirtualHostsManager/bin/Release
+/source/VirtualHostsManager/bin/Release/
 /source/VirtualHostsManager/obj/Debug/
+/source/VirtualHostsManager/obj/Release/

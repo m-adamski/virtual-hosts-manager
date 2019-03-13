@@ -35,7 +35,16 @@
             this.createButton = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.configInfoPictureBox = new System.Windows.Forms.PictureBox();
+            this.hostListView = new BrightIdeasSoftware.ObjectListView();
+            this.domainColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.directoryColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+            this.scanButton = new System.Windows.Forms.Button();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.previewStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.configInfoPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostListView)).BeginInit();
+            this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // configButton
@@ -71,7 +80,7 @@
             // configInfoPictureBox
             // 
             this.configInfoPictureBox.Image = global::VirtualHostsManager.Properties.Resources.info_icon;
-            this.configInfoPictureBox.Location = new System.Drawing.Point(691, 415);
+            this.configInfoPictureBox.Location = new System.Drawing.Point(610, 415);
             this.configInfoPictureBox.Name = "configInfoPictureBox";
             this.configInfoPictureBox.Size = new System.Drawing.Size(16, 23);
             this.configInfoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -81,11 +90,79 @@
         "uration");
             this.configInfoPictureBox.Visible = false;
             // 
+            // hostListView
+            // 
+            this.hostListView.AllColumns.Add(this.domainColumn);
+            this.hostListView.AllColumns.Add(this.directoryColumn);
+            this.hostListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.hostListView.CellEditUseWholeCell = false;
+            this.hostListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.domainColumn,
+            this.directoryColumn});
+            this.hostListView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.hostListView.FullRowSelect = true;
+            this.hostListView.Location = new System.Drawing.Point(12, 12);
+            this.hostListView.MultiSelect = false;
+            this.hostListView.Name = "hostListView";
+            this.hostListView.ShowGroups = false;
+            this.hostListView.Size = new System.Drawing.Size(776, 397);
+            this.hostListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.hostListView.TabIndex = 4;
+            this.hostListView.UseCompatibleStateImageBehavior = false;
+            this.hostListView.View = System.Windows.Forms.View.Details;
+            this.hostListView.CellRightClick += new System.EventHandler<BrightIdeasSoftware.CellRightClickEventArgs>(this.hostListView_CellRightClick);
+            this.hostListView.SelectionChanged += new System.EventHandler(this.hostListView_SelectionChanged);
+            // 
+            // domainColumn
+            // 
+            this.domainColumn.AspectName = "Domain";
+            this.domainColumn.Text = "Domain";
+            this.domainColumn.Width = 200;
+            // 
+            // directoryColumn
+            // 
+            this.directoryColumn.AspectName = "DirectoryPath";
+            this.directoryColumn.Text = "Directory";
+            this.directoryColumn.Width = 550;
+            // 
+            // scanButton
+            // 
+            this.scanButton.Location = new System.Drawing.Point(632, 415);
+            this.scanButton.Name = "scanButton";
+            this.scanButton.Size = new System.Drawing.Size(75, 23);
+            this.scanButton.TabIndex = 5;
+            this.scanButton.Text = "Scan";
+            this.scanButton.UseVisualStyleBackColor = true;
+            this.scanButton.Click += new System.EventHandler(this.scanButton_Click);
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.previewStripMenuItem,
+            this.removeStripMenuItem});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(118, 48);
+            // 
+            // previewStripMenuItem
+            // 
+            this.previewStripMenuItem.Name = "previewStripMenuItem";
+            this.previewStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.previewStripMenuItem.Text = "Preview";
+            this.previewStripMenuItem.Click += new System.EventHandler(this.previewStripMenuItem_Click);
+            // 
+            // removeStripMenuItem
+            // 
+            this.removeStripMenuItem.Name = "removeStripMenuItem";
+            this.removeStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.removeStripMenuItem.Text = "Remove";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.scanButton);
+            this.Controls.Add(this.hostListView);
             this.Controls.Add(this.configInfoPictureBox);
             this.Controls.Add(this.createButton);
             this.Controls.Add(this.templateButton);
@@ -95,6 +172,8 @@
             this.Text = "Virtual Hosts Manager";
             this.Activated += new System.EventHandler(this.MainWindow_Activated);
             ((System.ComponentModel.ISupportInitialize)(this.configInfoPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hostListView)).EndInit();
+            this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -106,6 +185,13 @@
         private System.Windows.Forms.Button createButton;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.PictureBox configInfoPictureBox;
+        private BrightIdeasSoftware.ObjectListView hostListView;
+        private BrightIdeasSoftware.OLVColumn domainColumn;
+        private BrightIdeasSoftware.OLVColumn directoryColumn;
+        private System.Windows.Forms.Button scanButton;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem previewStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeStripMenuItem;
     }
 }
 

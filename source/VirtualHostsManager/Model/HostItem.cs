@@ -1,6 +1,6 @@
 ﻿namespace VirtualHostsManager.Model
 {
-    class HostItem
+    public class HostItem
     {
         public string Domain { get; set; }
         public string DirectoryPath { get; set; }

@@ -269,7 +269,7 @@ namespace VirtualHostsManager
                                 }
                                 else
                                 {
-                                    this.ShowErrorBox("There was a problem while trying to write the configuration of the virtual host");
+                                    this.ShowErrorBox("There was a problem while trying to write the configuration");
                                 }
                             }
                             else
