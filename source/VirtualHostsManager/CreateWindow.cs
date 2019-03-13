@@ -213,7 +213,7 @@ namespace VirtualHostsManager
         {
 
             // Display confirm box
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to reset configurations of virtual hosts?", "Are you sure?", MessageBoxButtons.OKCancel);
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to reset configuration?", "Are you sure?", MessageBoxButtons.OKCancel);
 
             // Reset only when confirmed
             if (dialogResult == DialogResult.OK)

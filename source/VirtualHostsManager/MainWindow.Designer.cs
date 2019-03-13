@@ -141,20 +141,21 @@
             this.previewStripMenuItem,
             this.removeStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(118, 48);
+            this.contextMenuStrip.Size = new System.Drawing.Size(181, 70);
             // 
             // previewStripMenuItem
             // 
             this.previewStripMenuItem.Name = "previewStripMenuItem";
-            this.previewStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.previewStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.previewStripMenuItem.Text = "Preview";
             this.previewStripMenuItem.Click += new System.EventHandler(this.previewStripMenuItem_Click);
             // 
             // removeStripMenuItem
             // 
             this.removeStripMenuItem.Name = "removeStripMenuItem";
-            this.removeStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.removeStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.removeStripMenuItem.Text = "Remove";
+            this.removeStripMenuItem.Click += new System.EventHandler(this.removeStripMenuItem_Click);
             // 
             // MainWindow
             // 

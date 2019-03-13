@@ -136,5 +136,33 @@ namespace VirtualHostsManager
             // Set selected item
             this.selectedHostItem = selectedItem;
         }
+
+        // Remove stored selected item
+        private void removeStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            // Display confirm box
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this configuration?", "Are you sure?", MessageBoxButtons.OKCancel);
+
+            // Reset only when confirmed
+            if (dialogResult == DialogResult.OK)
+            {
+
+                // Display additional confirm box
+                dialogResult = MessageBox.Show($"Do you also want to delete the entire subdomain directory ({this.selectedHostItem.DirectoryPath})?", "Are you sure?", MessageBoxButtons.YesNoCancel);
+
+                if (dialogResult != DialogResult.Cancel)
+                {
+
+                    // TODO: Remove certificate and configuration files
+
+                    if (dialogResult == DialogResult.Yes)
+                    {
+
+                        // TODO: Remove subdomain directory
+                    }
+                }
+            }
+        }
     }
 }
