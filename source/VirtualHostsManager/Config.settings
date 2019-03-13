@@ -55,9 +55,6 @@
     <Setting Name="CertificateUnitName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="CertificateEmailAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="OpenSSLPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

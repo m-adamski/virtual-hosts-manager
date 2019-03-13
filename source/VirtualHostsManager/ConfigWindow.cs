@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using VirtualHostsManager.Model;
 
@@ -59,7 +53,6 @@ namespace VirtualHostsManager
             string localityName = Config.Default.CertificateLocalityName;
             string organizationName = Config.Default.CertificateOrganizationName;
             string unitName = Config.Default.CertificateUnitName;
-            string emailAddress = Config.Default.CertificateEmailAddress;
 
             // Prepare collection
             List<ConfigItem> configCollection = new List<ConfigItem>
@@ -68,8 +61,7 @@ namespace VirtualHostsManager
                 new ConfigItem { Name = "CertificateStateName", Description = "State or Province Name", Value = stateName },
                 new ConfigItem { Name = "CertificateLocalityName", Description = "Locality Name (eg, city)", Value = localityName },
                 new ConfigItem { Name = "CertificateOrganizationName", Description = "Organization Name (eg, company)", Value = organizationName },
-                new ConfigItem { Name = "CertificateUnitName", Description = "Organizational Unit Name (eg, section)", Value = unitName },
-                new ConfigItem { Name = "CertificateEmailAddress", Description = "Email Address", Value = emailAddress }
+                new ConfigItem { Name = "CertificateUnitName", Description = "Organizational Unit Name (eg, section)", Value = unitName }
             };
 
             return configCollection;

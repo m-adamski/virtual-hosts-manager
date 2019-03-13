@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.configButton = new System.Windows.Forms.Button();
             this.templateButton = new System.Windows.Forms.Button();
             this.createButton = new System.Windows.Forms.Button();
@@ -89,6 +90,7 @@
             this.Controls.Add(this.createButton);
             this.Controls.Add(this.templateButton);
             this.Controls.Add(this.configButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.Text = "Virtual Hosts Manager";
             this.Activated += new System.EventHandler(this.MainWindow_Activated);

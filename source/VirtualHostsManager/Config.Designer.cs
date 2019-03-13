@@ -160,18 +160,6 @@ namespace VirtualHostsManager {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string CertificateEmailAddress {
-            get {
-                return ((string)(this["CertificateEmailAddress"]));
-            }
-            set {
-                this["CertificateEmailAddress"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string OpenSSLPath {
             get {
                 return ((string)(this["OpenSSLPath"]));

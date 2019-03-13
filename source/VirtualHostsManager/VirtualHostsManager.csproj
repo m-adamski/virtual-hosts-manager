@@ -70,6 +70,7 @@
     <Compile Include="CreateWindow.Designer.cs">
       <DependentUpon>CreateWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ConfigurationHelper.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,6 +80,12 @@
     <Compile Include="Model\ConfigItem.cs" />
     <Compile Include="Model\HostItem.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProgressWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressWindow.Designer.cs">
+      <DependentUpon>ProgressWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemplateWindow.cs">
       <SubType>Form</SubType>
@@ -94,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressWindow.resx">
+      <DependentUpon>ProgressWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -131,6 +141,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\info-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

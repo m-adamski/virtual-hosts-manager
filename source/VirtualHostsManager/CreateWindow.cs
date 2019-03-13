@@ -1,15 +1,10 @@
 ﻿using ScintillaNET;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using VirtualHostsManager.Helper;
 using VirtualHostsManager.Model;
 
 namespace VirtualHostsManager
@@ -17,12 +12,16 @@ namespace VirtualHostsManager
     public partial class CreateWindow : Form
     {
 
+        private ConfigurationHelper configurationHelper;
         private List<HostItem> hostCollection;
         private HostItem selectedHostItem;
 
         public CreateWindow()
         {
             InitializeComponent();
+
+            // Init dependencies
+            this.configurationHelper = new ConfigurationHelper();
 
             // Style editor
             this.PrepareContentEditor();
@@ -86,8 +85,11 @@ namespace VirtualHostsManager
                     ConfigurationContent = configurationContent
                 };
 
-                // Add created item to the collection
-                hostCollection.Add(hostItem);
+                // Add created item to the collection when configuration file does not exist
+                if (!File.Exists(configurationPath))
+                {
+                    hostCollection.Add(hostItem);
+                }
             }
 
             return hostCollection;
@@ -139,31 +141,26 @@ namespace VirtualHostsManager
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void RunCommand(string fileName, string arguments)
+        // Show success box with specified message
+        private void ShowSuccessBox(string message, string title = "Success")
         {
-            Process commandProcess = new Process();
-            commandProcess.StartInfo.UseShellExecute = false;
-            commandProcess.StartInfo.RedirectStandardOutput = true;
-            commandProcess.StartInfo.FileName = fileName;
-            commandProcess.StartInfo.Arguments = arguments;
-            commandProcess.Start();
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
-            string output = commandProcess.StandardOutput.ReadToEnd();
+        // Reset collection
+        private void ResetCollection()
+        {
 
-            commandProcess.WaitForExit();
+            // Reload list view
+            this.hostListView.Items.Clear();
+            this.hostListView.Update();
 
-            System.Diagnostics.Debug.WriteLine(arguments);
-            System.Diagnostics.Debug.WriteLine(output);
+            // Reset content editor
+            this.contentEditor.Text = "Select the domain to create the virtual host configuration";
 
-            //Process commandProcess = new Process();
-            //ProcessStartInfo commandProcessStartInfo = new ProcessStartInfo();
-
-            //commandProcessStartInfo.WindowStyle = ProcessWindowStyle.Normal;
-            //commandProcessStartInfo.FileName = "cmd.exe";
-            //commandProcessStartInfo.Arguments = command;
-
-            //commandProcess.StartInfo = commandProcessStartInfo;
-            //commandProcess.Start();
+            // Refresh collection
+            this.hostCollection = this.PrepareHostData();
+            this.hostListView.SetObjects(this.hostCollection);
         }
 
         // Print host configuration content on domain selection changed
@@ -221,13 +218,7 @@ namespace VirtualHostsManager
             // Reset only when confirmed
             if (dialogResult == DialogResult.OK)
             {
-
-                // Reload list view
-                this.hostListView.SelectedIndex = -1;
-                this.hostListView.Update();
-
-                // Refresh collection
-                this.hostCollection = this.PrepareHostData();
+                this.ResetCollection();
             }
         }
 
@@ -246,16 +237,9 @@ namespace VirtualHostsManager
                 string certificateKeyPath = this.selectedHostItem.CertificateKeyPath;
                 string configurationContent = this.selectedHostItem.ConfigurationContent;
 
-                // Get config certificate parameters
-                string countryName = Config.Default.CertificateCountryName;
-                string stateName = Config.Default.CertificateStateName;
-                string localityName = Config.Default.CertificateLocalityName;
-                string organizationName = Config.Default.CertificateOrganizationName;
-                string unitName = Config.Default.CertificateUnitName;
-                string emailAddress = Config.Default.CertificateEmailAddress;
-
-                // Get OpenSSL path
-                string openSSLPath = Config.Default.OpenSSLPath;
+                // Create and show Progress Window
+                ProgressWindow progressWindow = new ProgressWindow();
+                progressWindow.Show();
 
                 // Check if creation is allowed
                 if (Directory.Exists(directoryPath))
@@ -265,11 +249,33 @@ namespace VirtualHostsManager
                         if (!File.Exists(certificatePath) && !File.Exists(certificateKeyPath))
                         {
 
-                            // Generate OpenSSL command
-                            string certificateGenerateCommand = $"req -x509 -nodes -newkey rsa:4096 -keyout \"{certificateKeyPath}\" -out \"{certificatePath}\" -days 365 -subj \"//C={countryName}/ST={stateName}/L={localityName}/O={organizationName}/OU={unitName}/CN={domainName}\"";
+                            // Generate certificate
+                            bool certificateStatus = this.configurationHelper.GenerateCertificate(domainName, certificatePath, certificateKeyPath);
 
-                            // Run command
-                            this.RunCommand(openSSLPath, certificateGenerateCommand);
+                            // Check generation status
+                            if (true == certificateStatus)
+                            {
+
+                                // Save virtual host configuration
+                                bool configurationStatus = this.configurationHelper.WriteConfiguration(configurationPath, configurationContent);
+
+                                // Check write status
+                                if (true == configurationStatus)
+                                {
+                                    this.ShowSuccessBox("The configuration has been completed successfully");
+
+                                    // Reset collection
+                                    this.ResetCollection();
+                                }
+                                else
+                                {
+                                    this.ShowErrorBox("There was a problem while trying to write the configuration of the virtual host");
+                                }
+                            }
+                            else
+                            {
+                                this.ShowErrorBox("There was a problem creating the certificate. Make sure the configuration is correct");
+                            }
                         }
                         else
                         {
@@ -285,6 +291,9 @@ namespace VirtualHostsManager
                 {
                     this.ShowErrorBox("The main subdomain directory was not found");
                 }
+
+                // Close Progress Window
+                progressWindow.Close();
             }
         }
     }
