@@ -21,6 +21,92 @@ namespace VirtualHostsManager
             this.configurationHelper = new ConfigurationHelper();
         }
 
+        // Scan for existing configurations
+        private void Scan()
+        {
+            string subdomainRootDirectory = Config.Default.SubdomainRootDirectory;
+            string hostConfigDirectory = Config.Default.HostConfigDirectory;
+            string certificateDirectory = Config.Default.CertificateDirectory;
+
+            // Define collection of the host items
+            List<HostItem> hostCollection = new List<HostItem>();
+
+            // Get collection with paths of the configurations files
+            string[] configurationsCollection = this.configurationHelper.GetConfigurationsCollection(hostConfigDirectory);
+
+            foreach (string configurationPath in configurationsCollection)
+            {
+
+                // Read content of the configuration file
+                string configurationContent = this.configurationHelper.ReadConfigurationFile(configurationPath);
+
+                // Parse configuration content
+                HostItem hostItem = this.configurationHelper.ParseConfiguration(configurationPath, configurationContent);
+
+                if (null != hostItem)
+                {
+                    hostCollection.Add(hostItem);
+                }
+            }
+
+            // Clear list view
+            this.hostListView.Items.Clear();
+            this.hostListView.SetObjects(hostCollection);
+        }
+
+        // Try to remove file with specified path
+        private bool RemoveFile(string path)
+        {
+            try
+            {
+                File.Delete(path);
+
+                return true;
+            }
+            catch (SystemException)
+            {
+
+                // Display error box
+                DialogResult dialogResult = MessageBox.Show($"There was a problem while trying to delete the file ({path})", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Stop);
+
+                if (dialogResult == DialogResult.Retry)
+                {
+                    return this.RemoveFile(path);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        // Try to remove directory with specified path
+        private bool RemoveDirectory(string path)
+        {
+            try
+            {
+                Directory.Delete(path, true);
+
+                return true;
+            }
+            catch (SystemException)
+            {
+
+                // Display error box
+                DialogResult dialogResult = MessageBox.Show($"There was a problem while trying to delete the directory ({path})", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Stop);
+
+                if (dialogResult == DialogResult.Retry)
+                {
+                    return this.RemoveDirectory(path);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        // Check configuration when window is active
         private void MainWindow_Activated(object sender, EventArgs e)
         {
 
@@ -69,35 +155,7 @@ namespace VirtualHostsManager
         // Scan for existing configurations
         private void scanButton_Click(object sender, EventArgs e)
         {
-
-            string subdomainRootDirectory = Config.Default.SubdomainRootDirectory;
-            string hostConfigDirectory = Config.Default.HostConfigDirectory;
-            string certificateDirectory = Config.Default.CertificateDirectory;
-
-            // Define collection of the host items
-            List<HostItem> hostCollection = new List<HostItem>();
-
-            // Get collection with paths of the configurations files
-            string[] configurationsCollection = this.configurationHelper.GetConfigurationsCollection(hostConfigDirectory);
-
-            foreach (string configurationPath in configurationsCollection)
-            {
-
-                // Read content of the configuration file
-                string configurationContent = this.configurationHelper.ReadConfigurationFile(configurationPath);
-
-                // Parse configuration content
-                HostItem hostItem = this.configurationHelper.ParseConfiguration(configurationPath, configurationContent);
-
-                if (null != hostItem)
-                {
-                    hostCollection.Add(hostItem);
-                }
-            }
-
-            // Clear list view
-            this.hostListView.Items.Clear();
-            this.hostListView.SetObjects(hostCollection);
+            this.Scan();
         }
 
         // Show Context Menu Strip
@@ -154,15 +212,46 @@ namespace VirtualHostsManager
                 if (dialogResult != DialogResult.Cancel)
                 {
 
-                    // TODO: Remove certificate and configuration files
+                    string certificatePath = this.selectedHostItem.CertificatePath;
+                    string certificateKeyPath = this.selectedHostItem.CertificateKeyPath;
+                    string configurationPath = this.selectedHostItem.ConfigurationPath;
+                    string directoryPath = this.selectedHostItem.DirectoryPath;
+
+                    // Remove files
+                    bool certificateStatus = this.RemoveFile(certificatePath);
+                    bool certificateKeyStatus = this.RemoveFile(certificateKeyPath);
+                    bool configurationStatus = this.RemoveFile(configurationPath);
 
                     if (dialogResult == DialogResult.Yes)
                     {
 
-                        // TODO: Remove subdomain directory
+                        // Remove subdomain directory
+                        bool directoryStatus = this.RemoveDirectory(directoryPath);
+
+                        if (true == directoryStatus)
+                        {
+                            MessageBox.Show("The subdomain folder has been successfully deleted", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("There was a problem while trying to delete the subdomain folder", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+
+                    // Check remove status
+                    if (true == certificateStatus && true == certificateKeyStatus && true == configurationStatus)
+                    {
+                        MessageBox.Show("The certificate and configuration file have been successfully removed", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("There was a problem while trying to delete the certificate and configuration file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
+
+            // Refresh configurations list
+            this.Scan();
         }
     }
 }

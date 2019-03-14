@@ -86,8 +86,7 @@
             this.configInfoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.configInfoPictureBox.TabIndex = 3;
             this.configInfoPictureBox.TabStop = false;
-            this.toolTip.SetToolTip(this.configInfoPictureBox, "To create a new virtual host configuration, you first need to complete the config" +
-        "uration");
+            this.toolTip.SetToolTip(this.configInfoPictureBox, "Complete the configuration before you can scan and create new virtual hosts");
             this.configInfoPictureBox.Visible = false;
             // 
             // hostListView
@@ -141,19 +140,19 @@
             this.previewStripMenuItem,
             this.removeStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(181, 70);
+            this.contextMenuStrip.Size = new System.Drawing.Size(118, 48);
             // 
             // previewStripMenuItem
             // 
             this.previewStripMenuItem.Name = "previewStripMenuItem";
-            this.previewStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.previewStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.previewStripMenuItem.Text = "Preview";
             this.previewStripMenuItem.Click += new System.EventHandler(this.previewStripMenuItem_Click);
             // 
             // removeStripMenuItem
             // 
             this.removeStripMenuItem.Name = "removeStripMenuItem";
-            this.removeStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.removeStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.removeStripMenuItem.Text = "Remove";
             this.removeStripMenuItem.Click += new System.EventHandler(this.removeStripMenuItem_Click);
             // 
