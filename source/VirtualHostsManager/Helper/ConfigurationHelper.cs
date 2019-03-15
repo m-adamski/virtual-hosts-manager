@@ -85,18 +85,23 @@ namespace VirtualHostsManager.Helper
             string hostConfigDirectory = Config.Default.HostConfigDirectory;
             string certificateDirectory = Config.Default.CertificateDirectory;
 
-            // Define Regex Match
-            Match domainNameMatch = Regex.Match(configurationContent, @"ServerName (.+)");
-            Match directoryPathMatch = Regex.Match(configurationContent, @"DocumentRoot (.+)");
-            Match certificatePathMatch = Regex.Match(configurationContent, @"SSLCertificateFile (.+)");
-            Match certificateKeyPathMatch = Regex.Match(configurationContent, @"SSLCertificateKeyFile (.+)");
+            // Define Apache Regex Match
+            Match domainNameMatch = Regex.Match(configurationContent, "(servername|server_name)[\"\'\\s]+([^\"\'\\;\\s]*)");
+            Match directoryPathMatch = Regex.Match(configurationContent, "(documentroot|root)[\"\'\\s]+([^\"\'\\;\\s]*)");
+            Match certificatePathMatch = Regex.Match(configurationContent, "(sslcertificatefile|ssl_certificate)[\"\'\\s]+([^\"\'\\;\\s]*)");
+            Match certificateKeyPathMatch = Regex.Match(configurationContent, "(sslcertificatekeyfile|ssl_certificate_key)[\"\'\\s]+([^\"\'\\;\\s]*)");
 
             // Get matching values
+            string domainName = this.RegexValue(domainNameMatch, 2);
+            string directoryPath = this.RegexValue(directoryPathMatch, 2);
+            string certificatePath = this.RegexValue(certificatePathMatch, 2);
+            string certificateKeyPath = this.RegexValue(certificateKeyPathMatch, 2);
+
             // Trim values to remove whitespaces
-            string domainName = this.RegexValue(domainNameMatch).Trim();
-            string directoryPath = this.RegexValue(directoryPathMatch).Trim();
-            string certificatePath = this.RegexValue(certificatePathMatch).Trim();
-            string certificateKeyPath = this.RegexValue(certificateKeyPathMatch).Trim();
+            domainName = domainName?.Trim();
+            directoryPath = directoryPath?.Trim();
+            certificatePath = certificatePath?.Trim();
+            certificateKeyPath = certificateKeyPath?.Trim();
 
             if (null != domainName && null != directoryPath)
             {
