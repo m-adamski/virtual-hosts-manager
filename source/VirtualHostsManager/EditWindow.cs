@@ -7,13 +7,14 @@ using VirtualHostsManager.Model;
 
 namespace VirtualHostsManager
 {
-    public partial class PreviewWindow : Form
+    public partial class EditWindow : Form
     {
         private ConfigurationHelper configurationHelper;
+        private ScintillaHelper scintillaHelper;
         private HostItem currentHostItem;
         private string originalConfigurationContent;
 
-        public PreviewWindow(HostItem hostItem)
+        public EditWindow(HostItem hostItem)
         {
             InitializeComponent();
 
@@ -23,31 +24,13 @@ namespace VirtualHostsManager
 
             // Init dependencies
             this.configurationHelper = new ConfigurationHelper();
+            this.scintillaHelper = new ScintillaHelper();
 
-            // Style editor
-            this.PrepareContentEditor();
+            // Style Scintilla editor
+            this.scintillaHelper.ConfigureLexer(ref this.contentEditor);
 
             // Set content of the editor
             this.contentEditor.Text = hostItem.ConfigurationContent;
-        }
-
-        // Style Scintilla editor
-        // https://github.com/jacobslusser/ScintillaNET/wiki/Automatic-Syntax-Highlighting
-        private void PrepareContentEditor()
-        {
-            this.contentEditor.StyleResetDefault();
-            this.contentEditor.Styles[Style.Default].Font = "Consolas";
-            this.contentEditor.Styles[Style.Default].Size = 8;
-            this.contentEditor.StyleClearAll();
-
-            // Configure the CPP (C#) lexer styles
-            this.contentEditor.Styles[Style.Cpp.Word].ForeColor = Color.Purple;
-            this.contentEditor.Styles[Style.Cpp.Word2].ForeColor = Color.FromArgb(128, 128, 128);
-            this.contentEditor.Styles[Style.Cpp.String].ForeColor = Color.FromArgb(163, 21, 21);
-            this.contentEditor.Lexer = Lexer.Cpp;
-
-            this.contentEditor.SetKeywords(0, "@Name @DocumentRootPath @CertificatePath @CertificateKeyPath");
-            this.contentEditor.SetKeywords(1, "ServerName ServerAlias DocumentRoot Options AllowOverride Require SSLEngine SSLCertificateFile SSLCertificateKeyFile");
         }
 
         // Reset content of the configuration file
@@ -55,10 +38,10 @@ namespace VirtualHostsManager
         {
 
             // Display confirm box
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to restore the contents of the configuration file?", "Are you sure?", MessageBoxButtons.OKCancel);
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to restore the contents of the configuration file?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Reset only when confirmed
-            if (dialogResult == DialogResult.OK)
+            if (dialogResult == DialogResult.Yes)
             {
                 this.contentEditor.Text = this.originalConfigurationContent;
             }
@@ -69,10 +52,10 @@ namespace VirtualHostsManager
         {
 
             // Display confirm box
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to save changes to the configuration file?", "Are you sure?", MessageBoxButtons.OKCancel);
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to save changes to the configuration file?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Reset only when confirmed
-            if (dialogResult == DialogResult.OK)
+            if (dialogResult == DialogResult.Yes)
             {
 
                 string configurationPath = this.currentHostItem.ConfigurationPath;

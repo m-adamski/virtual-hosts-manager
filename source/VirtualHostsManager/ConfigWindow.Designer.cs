@@ -132,6 +132,7 @@
             // certNameColumn
             // 
             this.certNameColumn.AspectName = "Description";
+            this.certNameColumn.IsEditable = false;
             this.certNameColumn.Text = "Name";
             this.certNameColumn.Width = 200;
             // 

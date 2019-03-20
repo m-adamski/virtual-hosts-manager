@@ -1,7 +1,6 @@
-﻿using ScintillaNET;
+﻿using PSHostsFile;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using VirtualHostsManager.Helper;
@@ -13,6 +12,7 @@ namespace VirtualHostsManager
     {
 
         private ConfigurationHelper configurationHelper;
+        private ScintillaHelper scintillaHelper;
         private List<HostItem> hostCollection;
         private HostItem selectedHostItem;
 
@@ -22,34 +22,16 @@ namespace VirtualHostsManager
 
             // Init dependencies
             this.configurationHelper = new ConfigurationHelper();
+            this.scintillaHelper = new ScintillaHelper();
 
             // Style editor
-            this.PrepareContentEditor();
+            this.scintillaHelper.ConfigureLexer(ref this.contentEditor);
 
             // Init hosts collection
             this.hostCollection = this.PrepareHostData();
 
             // Set data to the list view
             this.hostListView.SetObjects(this.hostCollection);
-        }
-
-        // Style Scintilla editor
-        // https://github.com/jacobslusser/ScintillaNET/wiki/Automatic-Syntax-Highlighting
-        private void PrepareContentEditor()
-        {
-            this.contentEditor.StyleResetDefault();
-            this.contentEditor.Styles[Style.Default].Font = "Consolas";
-            this.contentEditor.Styles[Style.Default].Size = 8;
-            this.contentEditor.StyleClearAll();
-
-            // Configure the CPP (C#) lexer styles
-            this.contentEditor.Styles[Style.Cpp.Word].ForeColor = Color.Purple;
-            this.contentEditor.Styles[Style.Cpp.Word2].ForeColor = Color.FromArgb(128, 128, 128);
-            this.contentEditor.Styles[Style.Cpp.String].ForeColor = Color.FromArgb(163, 21, 21);
-            this.contentEditor.Lexer = Lexer.Cpp;
-
-            this.contentEditor.SetKeywords(0, "@Name @DocumentRootPath @CertificatePath @CertificateKeyPath");
-            this.contentEditor.SetKeywords(1, "ServerName ServerAlias DocumentRoot Options AllowOverride Require SSLEngine SSLCertificateFile SSLCertificateKeyFile");
         }
 
         // Prepare list with hosts items to the list view
@@ -135,18 +117,6 @@ namespace VirtualHostsManager
             }
         }
 
-        // Show error box with specified message
-        private void ShowErrorBox(string message, string title = "Error")
-        {
-            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        // Show success box with specified message
-        private void ShowSuccessBox(string message, string title = "Success")
-        {
-            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         // Reset collection
         private void ResetCollection()
         {
@@ -213,10 +183,10 @@ namespace VirtualHostsManager
         {
 
             // Display confirm box
-            DialogResult dialogResult = MessageBox.Show("Are you sure you want to reset configuration?", "Are you sure?", MessageBoxButtons.OKCancel);
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to reset configuration?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             // Reset only when confirmed
-            if (dialogResult == DialogResult.OK)
+            if (dialogResult == DialogResult.Yes)
             {
                 this.ResetCollection();
             }
@@ -262,34 +232,54 @@ namespace VirtualHostsManager
                                 // Check write status
                                 if (true == configurationStatus)
                                 {
-                                    this.ShowSuccessBox("The configuration has been completed successfully");
+
+                                    // Display confirm box
+                                    DialogResult dialogResult = MessageBox.Show("The configuration has been completed successfully.\nDo you want to add an entry in the system hosts file?", "Success", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                                    // Add entry to hosts file when confirmed
+                                    if (dialogResult == DialogResult.Yes)
+                                    {
+                                        try
+                                        {
+
+                                            // Try to add new host into hosts configuration file
+                                            HostsFile.Set(domainName, "127.0.0.1");
+
+                                            // Show success message
+                                            MessageBox.Show("The entry has been successfully added", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        }
+                                        catch (SystemException)
+                                        {
+                                            MessageBox.Show("There was a problem while trying to add an entry", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        }
+                                    }
 
                                     // Reset collection
                                     this.ResetCollection();
                                 }
                                 else
                                 {
-                                    this.ShowErrorBox("There was a problem while trying to write the configuration");
+                                    MessageBox.Show("There was a problem while trying to write the configuration", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
                             else
                             {
-                                this.ShowErrorBox("There was a problem creating the certificate. Make sure the configuration is correct");
+                                MessageBox.Show("There was a problem creating the certificate. Make sure the configuration is correct", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                         else
                         {
-                            this.ShowErrorBox("One of the certificate files already exists");
+                            MessageBox.Show("One of the certificate files already exists", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
                     {
-                        this.ShowErrorBox("The virtual host configuration file already exists");
+                        MessageBox.Show("The virtual host configuration file already exists", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
                 {
-                    this.ShowErrorBox("The main subdomain directory was not found");
+                    MessageBox.Show("The main subdomain directory was not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 // Close Progress Window

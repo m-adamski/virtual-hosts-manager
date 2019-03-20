@@ -36,7 +36,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(597, 326);
+            this.saveButton.Location = new System.Drawing.Point(597, 526);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 0;
@@ -47,7 +47,7 @@
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(516, 326);
+            this.cancelButton.Location = new System.Drawing.Point(516, 526);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 1;
@@ -61,7 +61,7 @@
             this.templateEditor.Location = new System.Drawing.Point(12, 12);
             this.templateEditor.Name = "templateEditor";
             this.templateEditor.ScrollWidth = 600;
-            this.templateEditor.Size = new System.Drawing.Size(660, 308);
+            this.templateEditor.Size = new System.Drawing.Size(660, 508);
             this.templateEditor.TabIndex = 2;
             // 
             // TemplateWindow
@@ -69,7 +69,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(684, 361);
+            this.ClientSize = new System.Drawing.Size(684, 561);
             this.Controls.Add(this.templateEditor);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.saveButton);

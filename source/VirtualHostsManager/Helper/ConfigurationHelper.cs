@@ -86,10 +86,10 @@ namespace VirtualHostsManager.Helper
             string certificateDirectory = Config.Default.CertificateDirectory;
 
             // Define Apache Regex Match
-            Match domainNameMatch = Regex.Match(configurationContent, "(servername|server_name)[\"\'\\s]+([^\"\'\\;\\s]*)");
-            Match directoryPathMatch = Regex.Match(configurationContent, "(documentroot|root)[\"\'\\s]+([^\"\'\\;\\s]*)");
-            Match certificatePathMatch = Regex.Match(configurationContent, "(sslcertificatefile|ssl_certificate)[\"\'\\s]+([^\"\'\\;\\s]*)");
-            Match certificateKeyPathMatch = Regex.Match(configurationContent, "(sslcertificatekeyfile|ssl_certificate_key)[\"\'\\s]+([^\"\'\\;\\s]*)");
+            Match domainNameMatch = Regex.Match(configurationContent, "(servername|server_name)(.*)", RegexOptions.IgnoreCase);
+            Match directoryPathMatch = Regex.Match(configurationContent, "(documentroot|root)(.*)", RegexOptions.IgnoreCase);
+            Match certificatePathMatch = Regex.Match(configurationContent, "(sslcertificatefile|ssl_certificate)(.*)", RegexOptions.IgnoreCase);
+            Match certificateKeyPathMatch = Regex.Match(configurationContent, "(sslcertificatekeyfile|ssl_certificate_key)(.*)", RegexOptions.IgnoreCase);
 
             // Get matching values
             string domainName = this.RegexValue(domainNameMatch, 2);
@@ -98,10 +98,10 @@ namespace VirtualHostsManager.Helper
             string certificateKeyPath = this.RegexValue(certificateKeyPathMatch, 2);
 
             // Trim values to remove whitespaces
-            domainName = domainName?.Trim();
-            directoryPath = directoryPath?.Trim();
-            certificatePath = certificatePath?.Trim();
-            certificateKeyPath = certificateKeyPath?.Trim();
+            domainName = this.ClearString(domainName, new string[] { "'", "\"", ";" })?.Trim();
+            directoryPath = this.ClearString(directoryPath, new string[] { "'", "\"", ";" })?.Trim();
+            certificatePath = this.ClearString(certificatePath, new string[] { "'", "\"", ";" })?.Trim();
+            certificateKeyPath = this.ClearString(certificateKeyPath, new string[] { "'", "\"", ";" })?.Trim();
 
             if (null != domainName && null != directoryPath)
             {
@@ -157,6 +157,22 @@ namespace VirtualHostsManager.Helper
             }
 
             return null;
+        }
+
+        // Remove specified characters from provided string
+        private string ClearString(string value, string[] items)
+        {
+            string returnValue = value;
+
+            if (null != returnValue && items.Length > 0)
+            {
+                foreach (string item in items)
+                {
+                    returnValue = returnValue.Replace(item, "");
+                }
+            }
+
+            return returnValue;
         }
     }
 }

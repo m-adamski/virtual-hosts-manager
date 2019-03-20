@@ -40,7 +40,7 @@
             this.directoryColumn = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.scanButton = new System.Windows.Forms.Button();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.previewStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.configInfoPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hostListView)).BeginInit();
@@ -137,17 +137,17 @@
             // contextMenuStrip
             // 
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.previewStripMenuItem,
+            this.editStripMenuItem,
             this.removeStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip";
             this.contextMenuStrip.Size = new System.Drawing.Size(118, 48);
             // 
-            // previewStripMenuItem
+            // editStripMenuItem
             // 
-            this.previewStripMenuItem.Name = "previewStripMenuItem";
-            this.previewStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.previewStripMenuItem.Text = "Preview";
-            this.previewStripMenuItem.Click += new System.EventHandler(this.previewStripMenuItem_Click);
+            this.editStripMenuItem.Name = "editStripMenuItem";
+            this.editStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.editStripMenuItem.Text = "Edit";
+            this.editStripMenuItem.Click += new System.EventHandler(this.editStripMenuItem_Click);
             // 
             // removeStripMenuItem
             // 
@@ -167,7 +167,10 @@
             this.Controls.Add(this.createButton);
             this.Controls.Add(this.templateButton);
             this.Controls.Add(this.configButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MainWindow";
             this.Text = "Virtual Hosts Manager";
             this.Activated += new System.EventHandler(this.MainWindow_Activated);
@@ -190,7 +193,7 @@
         private BrightIdeasSoftware.OLVColumn directoryColumn;
         private System.Windows.Forms.Button scanButton;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem previewStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeStripMenuItem;
     }
 }
